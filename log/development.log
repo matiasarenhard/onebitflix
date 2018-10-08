@@ -570,3 +570,126 @@ Migrating to CreatePgSearchDocuments (20181008181650)
   ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
   [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
   ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(7704122458228562940)[0m
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+Migrating to CreateCategories (20181008185321)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+  [1m[35m (23.0ms)[0m  [1m[35mCREATE TABLE "categories" ("id" bigserial primary key, "name" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  ↳ db/migrate/20181008185321_create_categories.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20181008185321"]]
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+  [1m[35m (4.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+Migrating to CreateReviews (20181008185803)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+  [1m[35m (20.3ms)[0m  [1m[35mCREATE TABLE "reviews" ("id" bigserial primary key, "rating" integer, "description" text, "reviewable_type" character varying, "reviewable_id" bigint, "user_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_74a66bd6c5"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  ↳ db/migrate/20181008185803_create_reviews.rb:3
+  [1m[35m (2.9ms)[0m  [1m[35mCREATE  INDEX  "index_reviews_on_reviewable_type_and_reviewable_id" ON "reviews"  ("reviewable_type", "reviewable_id")[0m
+  ↳ db/migrate/20181008185803_create_reviews.rb:3
+  [1m[35m (7.6ms)[0m  [1m[35mCREATE  INDEX  "index_reviews_on_user_id" ON "reviews"  ("user_id")[0m
+  ↳ db/migrate/20181008185803_create_reviews.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20181008185803"]]
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+  [1m[35m (4.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+Migrating to CreateFavorites (20181008185816)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+  [1m[35m (18.2ms)[0m  [1m[35mCREATE TABLE "favorites" ("id" bigserial primary key, "favoritable_type" character varying, "favoritable_id" bigint, "user_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_d15744e438"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  ↳ db/migrate/20181008185816_create_favorites.rb:3
+  [1m[35m (3.1ms)[0m  [1m[35mCREATE  INDEX  "index_favorites_on_favoritable_type_and_favoritable_id" ON "favorites"  ("favoritable_type", "favoritable_id")[0m
+  ↳ db/migrate/20181008185816_create_favorites.rb:3
+  [1m[35m (5.9ms)[0m  [1m[35mCREATE  INDEX  "index_favorites_on_user_id" ON "favorites"  ("user_id")[0m
+  ↳ db/migrate/20181008185816_create_favorites.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20181008185816"]]
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+  [1m[35m (5.2ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+Migrating to CreateSeries (20181008185824)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+  [1m[35m (12.8ms)[0m  [1m[35mCREATE TABLE "series" ("id" bigserial primary key, "title" character varying, "description" text, "thumbnail_key" character varying, "category_id" bigint, "featured_thumbnail_key" character varying, "thumbnail_cover_key" character varying, "highlighted" boolean DEFAULT FALSE, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_d50a220694"
+FOREIGN KEY ("category_id")
+  REFERENCES "categories" ("id")
+)[0m
+  ↳ db/migrate/20181008185824_create_series.rb:3
+  [1m[35m (6.1ms)[0m  [1m[35mCREATE  INDEX  "index_series_on_category_id" ON "series"  ("category_id")[0m
+  ↳ db/migrate/20181008185824_create_series.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20181008185824"]]
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+  [1m[35m (5.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+Migrating to CreateMovies (20181008185838)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+  [1m[35m (13.0ms)[0m  [1m[35mCREATE TABLE "movies" ("id" bigserial primary key, "title" character varying, "description" text, "thumbnail_key" character varying, "video_key" character varying, "episode_number" integer, "featured_thumbnail_key" character varying, "serie_id" bigint, "category_id" bigint, "thumbnail_cover_key" character varying, "highlighted" boolean DEFAULT FALSE, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_e4e11f2bc6"
+FOREIGN KEY ("serie_id")
+  REFERENCES "series" ("id")
+, CONSTRAINT "fk_rails_cbeec57254"
+FOREIGN KEY ("category_id")
+  REFERENCES "categories" ("id")
+)[0m
+  ↳ db/migrate/20181008185838_create_movies.rb:3
+  [1m[35m (5.9ms)[0m  [1m[35mCREATE  INDEX  "index_movies_on_serie_id" ON "movies"  ("serie_id")[0m
+  ↳ db/migrate/20181008185838_create_movies.rb:3
+  [1m[35m (6.9ms)[0m  [1m[35mCREATE  INDEX  "index_movies_on_category_id" ON "movies"  ("category_id")[0m
+  ↳ db/migrate/20181008185838_create_movies.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20181008185838"]]
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+  [1m[35m (5.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+Migrating to CreatePlayers (20181008185849)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+  [1m[35m (4.5ms)[0m  [1m[35mCREATE TABLE "players" ("id" bigserial primary key, "start_date" timestamp, "end_date" timestamp, "elapsed_time" time, "movie_id" bigint, "user_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_9832e2bac2"
+FOREIGN KEY ("movie_id")
+  REFERENCES "movies" ("id")
+, CONSTRAINT "fk_rails_224cac07ce"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  ↳ db/migrate/20181008185849_create_players.rb:3
+  [1m[35m (6.0ms)[0m  [1m[35mCREATE  INDEX  "index_players_on_movie_id" ON "players"  ("movie_id")[0m
+  ↳ db/migrate/20181008185849_create_players.rb:3
+  [1m[35m (6.7ms)[0m  [1m[35mCREATE  INDEX  "index_players_on_user_id" ON "players"  ("user_id")[0m
+  ↳ db/migrate/20181008185849_create_players.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20181008185849"]]
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+  [1m[35m (5.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+Migrating to AddLastWatchedEpisodeToSeries (20181008185856)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "series" ADD "last_watched_episode_id" bigint[0m
+  ↳ db/migrate/20181008185856_add_last_watched_episode_to_series.rb:3
+  [1m[35m (3.1ms)[0m  [1m[35mCREATE  INDEX  "index_series_on_last_watched_episode_id" ON "series"  ("last_watched_episode_id")[0m
+  ↳ db/migrate/20181008185856_add_last_watched_episode_to_series.rb:3
+  [1m[35m (1.7ms)[0m  [1m[35mALTER TABLE "series" ADD CONSTRAINT "fk_rails_a4c673e5cf"
+FOREIGN KEY ("last_watched_episode_id")
+  REFERENCES "movies" ("id")
+[0m
+  ↳ db/migrate/20181008185856_add_last_watched_episode_to_series.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20181008185856"]]
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+  [1m[35m (2.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(7704122458228562940)[0m
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /home/matiasnote/.rvm/gems/ruby-2.5.1/bin/rake:23
